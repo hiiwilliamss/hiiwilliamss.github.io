@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>William Lorenzo — Data Scientist | Data Scientist I</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream: #F4F1EB;
+  --ink:   #141210;
+  --mid:   #7A7670;
+  --rule:  #D8D4CB;
+  --accent:#C06B3A;
+  --f-serif: 'DM Serif Display', Georgia, serif;
+  --f-mono:  'DM Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--f-mono);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+
+#cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;
+  mix-blend-mode: multiply;
+}
+#cursor.big {
+  width: 44px; height: 44px;
+  background: rgba(192,107,58,0.18);
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem clamp(2rem,7vw,6rem);
+  backdrop-filter: blur(10px);
+  background: rgba(244,241,235,0.82);
+}
+nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: clamp(2rem,7vw,6rem); right: clamp(2rem,7vw,6rem);
+  height: 1px;
+  background: var(--rule);
+}
+.nav-logo {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -3px;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { color: var(--ink) !important; font-weight: 500; }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: none;
+  padding: 4px;
+}
+.hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); transition: all 0.3s; }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--cream);
+  z-index: 98;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 2.2rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.mobile-menu a:hover { color: var(--accent); }
+
+.wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(2rem,7vw,6rem);
+}
+.section-num {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+hr.rule { border: none; border-top: 1px solid var(--rule); margin: 0; }
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+.hero-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0.2; } }
+.hero-name {
+  font-family: var(--f-serif);
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.hero-name em { font-style: italic; color: var(--accent); }
+.hero-right {
+  text-align: right;
+  flex-shrink: 0;
+  padding-left: 2rem;
+}
+.hero-role {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  line-height: 1.8;
+}
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 3rem;
+  border-top: 1px solid var(--rule);
+  gap: 2rem;
+}
+.hero-bio {
+  max-width: 560px;
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--mid);
+}
+.hero-bio strong { color: var(--ink); font-weight: 500; }
+.hero-actions { display: flex; gap: 1rem; align-items: center; flex-shrink: 0; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  cursor: none;
+  background: none;
+}
+.btn:hover { background: var(--ink); color: var(--cream); }
+.btn-ghost {
+  border-color: var(--rule);
+  color: var(--mid);
+}
+.btn-ghost:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+.ticker-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0;
+}
+.ticker-track {
+  display: flex;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+}
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 0 2.5rem;
+}
+.ticker-item::after {
+  content: '·';
+  color: var(--accent);
+  font-size: 1.2rem;
+  line-height: 0;
+}
+
+#about, #skills, #projects, #documents, #experience, #contact { padding: 7rem 0; }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 6rem;
+  align-items: start;
+  padding-top: 4rem;
+}
+.about-left { position: sticky; top: 8rem; }
+.about-index {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--rule);
+  margin-bottom: 1.5rem;
+}
+.about-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.about-location {
+  font-size: 0.82rem;
+  color: var(--ink);
+  line-height: 1.7;
+}
+.about-lead {
+  font-family: var(--f-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.45;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  color: var(--ink);
+}
+.about-lead em { font-style: italic; color: var(--accent); }
+.about-body {
+  font-size: 0.82rem;
+  line-height: 1.95;
+  color: var(--mid);
+  margin-bottom: 3rem;
+}
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--rule);
+}
+.fact {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.fact:nth-child(odd) { padding-right: 3rem; border-right: 1px solid var(--rule); }
+.fact:nth-child(even) { padding-left: 3rem; }
+.fact-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.fact-value {
+  font-size: 0.82rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.skills-header, .documents-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  padding-top: 4rem;
+  margin-bottom: 4rem;
+}
+.skills-intro, .documents-intro {
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--mid);
+}
+.skills-table { width: 100%; border-collapse: collapse; }
+.skills-table tr { border-bottom: 1px solid var(--rule); }
+.skills-table tr:first-child { border-top: 1px solid var(--rule); }
+.skills-table td {
+  padding: 1.1rem 0;
+  font-size: 0.78rem;
+  vertical-align: middle;
+}
+.skill-name { color: var(--ink); width: 32%; font-weight: 500; }
+.skill-category { color: var(--mid); width: 22%; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.skill-track {
+  width: 38%;
+  height: 2px;
+  background: var(--rule);
+  position: relative;
+}
+.skill-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--ink);
+  width: 0;
+  transition: width 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.skill-pct { width: 8%; text-align: right; color: var(--mid); font-size: 0.68rem; }
+
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 4rem;
+  margin-bottom: 0;
+  gap: 2rem;
+}
+.projects-count {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.project-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr 12rem 8rem;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+.project-row:first-of-type { border-top: 1px solid var(--rule); margin-top: 0; }
+.project-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  z-index: 0;
+}
+.project-row:hover::before { transform: translateX(0); }
+.project-row:hover .project-row-num,
+.project-row:hover .project-row-title,
+.project-row:hover .project-row-tags,
+.project-row:hover .project-row-year,
+.project-row:hover .project-row-link { color: var(--cream); }
+.project-row:hover .project-row-desc { color: rgba(244,241,235,0.68); }
+.project-row > * { position: relative; z-index: 1; transition: color 0.2s; }
+.project-row-num { font-size: 0.68rem; color: var(--mid); }
+.project-row-title {
+  font-family: var(--f-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+.project-row-desc {
+  font-size: 0.72rem;
+  color: var(--mid);
+  line-height: 1.6;
+}
+.project-row-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  color: var(--mid);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.project-row-year {
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--mid);
+}
+.project-row-link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+.doc-card {
+  border: 1px solid var(--rule);
+  padding: 1.4rem;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.35);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+.doc-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ink);
+  background: rgba(255,255,255,0.65);
+}
+.doc-type {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.doc-title {
+  font-family: var(--f-serif);
+  font-size: 1.25rem;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+.doc-meta {
+  font-size: 0.7rem;
+  color: var(--mid);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.doc-desc {
+  font-size: 0.75rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+.doc-actions {
+  display: flex;
+  gap: 0.8rem;
+  padding-top: 1.1rem;
+  margin-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+.doc-btn {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.doc-btn:hover { color: var(--accent); }
+.placeholder-note {
+  margin-top: 1.6rem;
+  font-size: 0.74rem;
+  color: var(--mid);
+  line-height: 1.8;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+code.inline {
+  background: rgba(20,18,16,0.06);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+}
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  padding-top: 4rem;
+}
+.exp-col-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.exp-item {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.exp-item:first-of-type { border-top: 1px solid var(--rule); }
+.exp-date {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.exp-title {
+  font-family: var(--f-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+.exp-place {
+  font-size: 0.72rem;
+  color: var(--mid);
+  margin-bottom: 0.75rem;
+}
+.exp-desc {
+  font-size: 0.75rem;
+  line-height: 1.85;
+  color: var(--mid);
+}
+
+.contact-inner {
+  padding-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+}
+.contact-heading {
+  font-family: var(--f-serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+.contact-heading em { font-style: italic; color: var(--accent); }
+.contact-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.78rem;
+  transition: color 0.2s, padding-left 0.3s;
+  cursor: none;
+}
+.contact-link:first-of-type { border-top: 1px solid var(--rule); }
+.contact-link:hover { color: var(--accent); padding-left: 0.5rem; }
+.contact-link-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.contact-form { display: flex; flex-direction: column; }
+.field {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem 0;
+  position: relative;
+}
+.field:first-child { border-top: 1px solid var(--rule); }
+.field label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.3rem;
+  padding-top: 0.6rem;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  color: var(--ink);
+  padding: 0.3rem 0 0.8rem;
+  resize: none;
+  caret-color: var(--accent);
+}
+.field textarea { min-height: 100px; }
+.field::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: var(--ink);
+  transition: width 0.4s;
+}
+.field:focus-within::after { width: 100%; }
+.form-footer { display: flex; justify-content: flex-end; padding-top: 2rem; }
+#form-ok {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.footer-copy {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+@media (max-width: 960px) {
+  .docs-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  .hero-top { flex-direction: column; align-items: flex-start; }
+  .hero-right { text-align: left; padding-left: 0; margin-top: 1.5rem; }
+  .hero-meta { flex-direction: column; gap: 2rem; align-items: flex-start; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-left { position: static; }
+  .skills-header, .documents-header { grid-template-columns: 1fr; gap: 2rem; }
+  .project-row { grid-template-columns: 2.5rem 1fr; }
+  .project-row-tags, .project-row-year { display: none; }
+  .exp-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+}
+@media (max-width: 640px) {
+  .docs-grid, .about-facts { grid-template-columns: 1fr; }
+  .fact:nth-child(odd) { padding-right: 0; border-right: none; }
+  .fact:nth-child(even) { padding-left: 0; }
+  #cursor { display: none; }
+  body, .btn, .contact-link, .project-row, .hamburger { cursor: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<div class="mobile-menu" id="mob">
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#skills" onclick="closeMob()">Skills</a>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#documents" onclick="closeMob()">Documents</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<nav>
+  <a href="#hero" class="nav-logo">William<em style="font-style:italic;color:var(--accent)"> Lorenzo</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#documents">Documents</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Contact ↗</a></li>
+  </ul>
+  <button class="hamburger" id="hbg" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <div class="hero-badge">Open to opportunities</div>
+        <h1 class="hero-name">
+          William<br>
+          <em>Lorenzo</em>
+        </h1>
+      </div>
+      <div class="hero-right">
+        <div class="hero-role">
+          Data Scientist<br>
+          AI Engineer<br>
+          Based in <span style="color:var(--accent)">San Francisco Bay Area</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <p class="hero-bio">
+        I build at the intersection of <strong>machine learning, geospatial data, and applied AI</strong> — turning complex datasets into models and systems that support real-world decisions. Currently focused on wildfire prediction, medical imaging, and practical ML deployment.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn">View Work</a>
+        <a href="#documents" class="btn btn-ghost">See PDFs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Python</span><span class="ticker-item">TensorFlow</span><span class="ticker-item">PyTorch</span><span class="ticker-item">SQL</span><span class="ticker-item">AWS</span><span class="ticker-item">R</span><span class="ticker-item">Tableau</span><span class="ticker-item">Geospatial Data</span><span class="ticker-item">Wildfire Modeling</span><span class="ticker-item">Statistics</span><span class="ticker-item">Deep Learning</span><span class="ticker-item">Computer Vision</span>
+    <span class="ticker-item">Python</span><span class="ticker-item">TensorFlow</span><span class="ticker-item">PyTorch</span><span class="ticker-item">SQL</span><span class="ticker-item">AWS</span><span class="ticker-item">R</span><span class="ticker-item">Tableau</span><span class="ticker-item">Geospatial Data</span><span class="ticker-item">Wildfire Modeling</span><span class="ticker-item">Statistics</span><span class="ticker-item">Deep Learning</span><span class="ticker-item">Computer Vision</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <hr class="rule"/>
+    <div class="about-grid reveal">
+      <div class="about-left">
+        <div class="about-index">01</div>
+        <span class="about-label">Location</span>
+        <div class="about-location">San Francisco Bay Area<br>California, USA</div>
+        <br>
+        <span class="about-label" style="margin-top:1rem;">Status</span>
+        <div class="about-location" style="color:var(--accent)">Open to work</div>
+      </div>
+      <div class="about-right">
+        <span class="section-num">About Me</span>
+        <p class="about-lead">
+          I'm a data scientist and AI engineer focused on building <em>useful, applied systems</em> across environmental modeling and healthcare ML.
+        </p>
+        <p class="about-body">
+          I currently work at Interlinked, where I develop wildfire prediction and disaster-response systems using machine learning, physics-based modeling, and geospatial data pipelines. My recent work focuses on deep learning for medical image segmentation using PyTorch, where I design and train U-Net architectures with pretrained ResNet encoders, handling preprocessing of DICOM/NIfTI data, model optimization, and evaluation using Dice metrics. I also have experience in TensorFlow-based heart disease prediction and statistical analysis of GPU cloud infrastructure pricing. I care about clear thinking, strong fundamentals, and building models that can be trusted in real-world settings.
+        </p>
+        <div class="about-facts">
+          <div class="fact">
+            <span class="fact-label">Education</span>
+            <span class="fact-value">B.S. Statistics<br>Data Science Concentration</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">University</span>
+            <span class="fact-value">Cal State East Bay<br>GPA 3.82 · Magna Cum Laude</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">Focus Areas</span>
+            <span class="fact-value">Deep Learning · Geospatial AI · Healthcare ML</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">Current Role</span>
+            <span class="fact-value">Lead Data Analyst / AI Engineer at Interlinked</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <hr class="rule"/>
+    <div class="skills-header reveal">
+      <div>
+        <span class="section-num">02 — Skills</span>
+        <h2 style="font-family:var(--f-serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.1;">Technical<br><em style="font-style:italic;color:var(--accent)">Expertise</em></h2>
+      </div>
+      <p class="skills-intro">
+        A focused toolkit built through hands-on work in machine learning, cloud infrastructure, analytics, and production-ready data workflows.
+      </p>
+    </div>
+    <table class="skills-table reveal">
+      <tbody>
+        <tr><td class="skill-name">Python / Pandas</td><td class="skill-category">Core Language</td><td class="skill-track"><div class="skill-fill" data-w="96"></div></td><td class="skill-pct">96%</td></tr>
+        <tr><td class="skill-name">TensorFlow</td><td class="skill-category">Deep Learning</td><td class="skill-track"><div class="skill-fill" data-w="90"></div></td><td class="skill-pct">90%</td></tr>
+        <tr><td class="skill-name">PyTorch</td><td class="skill-category">Deep Learning</td><td class="skill-track"><div class="skill-fill" data-w="87"></div></td><td class="skill-pct">87%</td></tr>
+        <tr><td class="skill-name">SQL / MySQL</td><td class="skill-category">Data</td><td class="skill-track"><div class="skill-fill" data-w="89"></div></td><td class="skill-pct">89%</td></tr>
+        <tr><td class="skill-name">AWS (S3 / Lambda / CloudWatch)</td><td class="skill-category">Cloud</td><td class="skill-track"><div class="skill-fill" data-w="84"></div></td><td class="skill-pct">84%</td></tr>
+        <tr><td class="skill-name">R / SAS / Statistical Analysis</td><td class="skill-category">Analytics</td><td class="skill-track"><div class="skill-fill" data-w="86"></div></td><td class="skill-pct">86%</td></tr>
+        <tr><td class="skill-name">Tableau / Visualization</td><td class="skill-category">Visualization</td><td class="skill-track"><div class="skill-fill" data-w="82"></div></td><td class="skill-pct">82%</td></tr>
+        <tr><td class="skill-name">Geospatial Data Processing</td><td class="skill-category">Applied AI</td><td class="skill-track"><div class="skill-fill" data-w="85"></div></td><td class="skill-pct">85%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <hr class="rule"/>
+    <div class="projects-header reveal">
+      <div>
+        <span class="section-num">03 — Work</span>
+        <h2 style="font-family:var(--f-serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.1;">Selected<br><em style="font-style:italic;color:var(--accent)">Projects</em></h2>
+      </div>
+      <div class="projects-count">03 featured projects</div>
+    </div>
+
+<a href="https://www.researchgate.net/publication/403296543_Myocardial_Perfusion_Segmentation_with_PyTorch_U-Net" target="_blank" rel="noopener noreferrer" class="project-row reveal">
+  <div class="project-row-num">01</div>
+  <div class="project-row-main">
+    <div class="project-row-title">Myocardial Perfusion Segmentation</div>
+    <div class="project-row-desc">Built a PyTorch U-Net pipeline for DICOM/NIfTI medical image segmentation, reaching a validation Dice score of about 0.86.</div>
+    <span class="project-row-link">View publication →</span>
+  </div>
+  <div class="project-row-tags"><span>PyTorch</span> <span>U-Net</span> <span>Medical Imaging</span></div>
+  <div class="project-row-year">2026</div>
+</a>
+
+<a href="https://www.researchgate.net/publication/402501810_TensorFlow_Multilayer_Perceptron_Modeling_for_Heart_Disease_Prediction" target="_blank" rel="noopener noreferrer" class="project-row reveal">
+  <div class="project-row-num">02</div>
+  <div class="project-row-main">
+    <div class="project-row-title">Heart Disease Prediction with TensorFlow</div>
+    <div class="project-row-desc">Developed an MLP classifier for structured clinical data with strong performance, robust preprocessing, and practical model tuning.</div>
+    <span class="project-row-link">View publication →</span>
+  </div>
+  <div class="project-row-tags"><span>TensorFlow</span> <span>Healthcare AI</span> <span>Classification</span></div>
+  <div class="project-row-year">2026</div>
+</a>
+
+<a href="https://www.researchgate.net/publication/398345625_Performance_Pricing_and_Utilization_for_Lambda_GPU_Cloud_Instances" target="_blank" rel="noopener noreferrer" class="project-row reveal">
+  <div class="project-row-num">03</div>
+  <div class="project-row-main">
+    <div class="project-row-title">Lambda GPU Cloud Analytics Dashboard</div>
+    <div class="project-row-desc">Analyzed performance, pricing, utilization, and reliability patterns across synthetic GPU cloud instances using statistical testing and dashboards.</div>
+    <span class="project-row-link">View report →</span>
+  </div>
+  <div class="project-row-tags"><span>R</span> <span>Tableau</span> <span>Statistics</span></div>
+  <div class="project-row-year">2025</div>
+</a>
+  </div>
+</section>
+
+<section id="documents">
+  <div class="wrap">
+    <hr class="rule"/>
+    <div class="documents-header reveal">
+      <div>
+        <span class="section-num">04 — Documents</span>
+        <h2 style="font-family:var(--f-serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.1;">Publications,<br><em style="font-style:italic;color:var(--accent)">PDFs & Assets</em></h2>
+      </div>
+      <p class="documents-intro">
+        A dedicated section for papers, resumes, certifications, poster PDFs, case studies, slide decks, and downloadable project materials.
+      </p>
+    </div>
+
+    <div class="docs-grid reveal">
+      <article class="doc-card">
+        <div>
+          <div class="doc-type">Publication</div>
+          <h3 class="doc-title">Myocardial Perfusion Segmentation with PyTorch U-Net</h3>
+          <div class="doc-meta">Research paper · March 2026</div>
+          <p class="doc-desc">This study explores deep learning-based segmentation of myocardial perfusion regions using a U-Net model. Medical images were preprocessed into 2D slices and normalized. A baseline U-Net with a pretrained ResNet34 encoder performed well, achieving a Dice score of ~0.86. However, a more complex tuned model underperformed, showing that segmentation is sensitive to small datasets and class imbalance. Overall, simpler models with strong preprocessing yielded the best results.
+</p>
+        </div>
+        <div class="doc-actions">
+            <a class="doc-btn" href="./pdfs/Myocardial Perfusion Segmentation with U-Net.pdf" target="_blank">Open PDF</a>
+            <a class="doc-btn" href="https://www.researchgate.net/publication/403296543_Myocardial_Perfusion_Segmentation_with_PyTorch_U-Net" target="_blank">ResearchGate</a>
+        </div>
+      </article>
+
+      <article class="doc-card">
+        <div>
+          <div class="doc-type">Publication</div>
+          <h3 class="doc-title">TensorFlow MLP for Heart Disease Prediction</h3>
+          <div class="doc-meta">Research paper · March 2026</div>
+          <p class="doc-desc">This project applies a TensorFlow-based MLP to predict heart disease using clinical and demographic data. It involves exploratory analysis, preprocessing (one-hot encoding and scaling), and building a binary classification model to identify patterns linked to heart disease.
+</p>
+        </div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="./pdfs/WilliamLorenzosTensorFlowMultilayerPerceptronModelingforHeartDiseasePrediction.pdf" target="_blank">Open PDF</a>
+          <a class="doc-btn" href="https://www.researchgate.net/publication/402501810_TensorFlow_Multilayer_Perceptron_Modeling_for_Heart_Disease_Prediction?_tp=eyJjb250ZXh0Ijp7InBhZ2UiOiJwcm9maWxlIiwicHJldmlvdXNQYWdlIjpudWxsLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19">ResearchGate</a>
+        </div>
+      </article>
+
+      <article class="doc-card">
+        <div>
+          <div class="doc-type">Report</div>
+          <h3 class="doc-title">Lambda GPU Cloud Analytics</h3>
+          <div class="doc-meta">Team research · December 2025</div>
+          <p class="doc-desc">This project analyzes factors influencing GPU cloud pricing on Lambda using data from 300 instances. Statistical methods show that hardware performance, VRAM, reliability, and region have little impact on pricing. Instead, pricing is largely driven by customer segmentation, with enterprise and individual users paying more despite similar usage.
+</p>
+        </div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="./pdfs/stat330_project1.pdf" target="_blank">Open PDF</a>
+          <a class="doc-btn" href="https://docs.google.com/presentation/d/1xSm4pLeRzoBPCY6W4viwvtqbgD1GytyuyJ3PVRwDcfU/edit?usp=sharing">Slides</a>
+        </div>
+      </article>
+
+      <article class="doc-card">
+        <div>
+          <div class="doc-type">Resume</div>
+          <h3 class="doc-title">Current Resume</h3>
+          <div class="doc-meta">Downloadable asset</div>
+          <p class="doc-desc">Entry-level data scientist with experience in AI, machine learning, and large-scale data analysis, specializing in environmental modeling and real-world data-driven solutions.
+</p>
+        </div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="./pdfs/William_Lorenzo_Resume.pdf" target="_blank">Open PDF</a>
+          <a class="doc-btn" href="./pdfs/William_Lorenzo_Resume.pdf" download>Download</a>
+        </div>
+      </article>
+
+      <article class="doc-card">
+        <div>
+          <div class="doc-type">Certification</div>
+          <h3 class="doc-title">Certifications & Credentials</h3>
+          <div class="doc-meta">IBM · Databricks · More</div>
+          <p class="doc-desc">
+            Verified certifications and credentials from platforms such as IBM, Databricks, and more.
+          </p>
+        </div>
+        <div class="doc-actions">
+          <a class="doc-btn" href="https://www.coursera.org/account/accomplishments/verify/7BAGTXB9PARX" target="_blank">
+            IBM, What is Data Science?
+          </a>
+
+          <a class="doc-btn" href="https://www.coursera.org/account/accomplishments/verify/DZYYZXDMJ7QN" target="_blank">
+            University of Michigan, Programming for Everybody (Getting Started with Python)
+          </a>
+
+          <a class="doc-btn" href="https://credentials.databricks.com/acdad967-0b2b-4998-81cc-d4d66f311f9d#acc.lhU2VDEX" target="_blank">
+            Databricks, Databricks Fundamentals
+          </a>
+
+          <a class="doc-btn" href="pdfs/3508_3_1080724_1749415694_Databricks - Advanced ML Ops.pdf" target="_blank">
+            Databricks, Advanced Machine Learning Operations
+          </a>
+
+          <a class="doc-btn" href="https://credentials.databricks.com/346102c1-2fd4-4234-9f96-82af394332f5#acc.QxlIWuVK" target="_blank">
+            Databricks, Generative AI Fundamentals
+          </a>
+
+          <a class="doc-btn" href="https://www.coursera.org/account/accomplishments/verify/LWKT06LMSI0C" target="_blank">
+            IBM, Python for Data Science, AI & Development
+          </a>
+        </div>
+      </article>
+    </div>
+
+<section id="experience">
+  <div class="wrap">
+    <hr class="rule"/>
+    <span class="section-num" style="padding-top:4rem;display:block;">05 — Experience</span>
+    <div class="exp-grid reveal">
+      <div>
+        <div class="exp-col-label">Work History</div>
+        <div class="exp-item">
+          <div class="exp-date">Aug 2025 — Present</div>
+          <div class="exp-title">AI Engineer & Research</div>
+          <div class="exp-place">Interlinked · Berkeley, California</div>
+          <div class="exp-desc">Building wildfire spread simulation and forecasting systems using ML architectures, curated environmental datasets, and real-time model integration.</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-date">Jul 2025 — Present</div>
+          <div class="exp-title">Lead Data Analyst</div>
+          <div class="exp-place">Interlinked · Berkeley, California</div>
+          <div class="exp-desc">Managing AWS S3 data infrastructure, preprocessing geospatial layers, documenting datasets, and supporting wildfire prediction model pipelines.</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-date">May 2025 — Jul 2025</div>
+          <div class="exp-title">Environmental Data Analyst</div>
+          <div class="exp-place">Interlinked · Berkeley, California</div>
+          <div class="exp-desc">Curated wildfire-relevant datasets, converted scientific data into modeling-ready formats, and supported geospatial structuring for AI workflows.</div>
+        </div>
+      </div>
+      <div>
+        <div class="exp-col-label">Education</div>
+        <div class="exp-item">
+          <div class="exp-date">2021 — 2026</div>
+          <div class="exp-title">B.S. Statistics, Data Science Concentration</div>
+          <div class="exp-place">California State University, East Bay</div>
+          <div class="exp-desc">Graduated magna cum laude with a 3.82 GPA. Coursework and projects centered on statistics, machine learning, healthcare ML, and applied analytics.</div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <hr class="rule"/>
+    <div class="contact-inner reveal">
+      <div>
+        <span class="section-num">06 — Contact</span>
+        <h2 class="contact-heading">Let's<br>build<br><em>something useful.</em></h2>
+        <a href="mailto:ssfjdm@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <span>ssfjdm@gmail.com ↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/william-l-9347a7228/" target="_blank" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          <span>linkedin.com/in/william-l-9347a7228/ ↗</span>
+        </a>
+        <a href="https://github.com/hiiwilliamss" target="_blank" class="contact-link">
+          <span class="contact-link-label">GitHub</span>
+          <span>github.com/hiiwilliamss ↗</span>
+        </a>
+        <a href="https://hiiwilliamss.github.io/" target="_blank" class="contact-link">
+          <span class="contact-link-label">Portfolio</span>
+          <span>mathtodata.com ↗</span>
+        </a>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/xlgopklk" method="POST">
+  <div class="field">
+    <label>Your name</label>
+    <input type="text" name="name" placeholder="Jane Smith" required />
+  </div>
+
+  <div class="field">
+    <label>Email address</label>
+    <input type="email" name="email" placeholder="jane@example.com" required />
+  </div>
+
+  <div class="field">
+    <label>Subject</label>
+    <input type="text" name="subject" placeholder="Job opportunity / Collaboration / Research" />
+  </div>
+
+  <div class="field">
+    <label>Message</label>
+    <textarea name="message" placeholder="Type your message…" rows="5" required></textarea>
+  </div>
+
+  <!-- This makes replies go to the sender -->
+  <input type="hidden" name="_replyto" value="">
+
+  <!-- Optional: redirect after submit -->
+  <input type="hidden" name="_next" value="https://hiiwilliamss.github.io/">
+
+  <div class="form-footer">
+    <button type="submit" class="btn">Send Message →</button>
+  </div>
+</form>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="footer-brand">William Lorenzo</div>
+  <div class="footer-copy">© 2026 — All rights reserved</div>
+</footer>
+
+<script>
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, input, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+
+document.getElementById('hbg').addEventListener('click', () => {
+  document.getElementById('mob').classList.toggle('open');
+});
+function closeMob() { document.getElementById('mob').classList.remove('open'); }
+
+const ro = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i * 0.06) + 's';
+      e.target.classList.add('in');
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+const bo = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(f => f.style.width = f.dataset.w + '%');
+      bo.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.skills-table').forEach(t => bo.observe(t));
+
+const secs = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 120;
+  secs.forEach(s => {
+    if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + s.id ? 'var(--ink)' : '';
+      });
+    }
+  });
+});
+
+function send(e) {
+  e.preventDefault();
+  const ok = document.getElementById('form-ok');
+  ok.style.display = 'block';
+  e.target.reset();
+  setTimeout(() => ok.style.display = 'none', 5000);
+}
+</script>
+</body>
+</html>
